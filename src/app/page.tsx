@@ -10,6 +10,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { resolve } from "path";
 
 interface Recipe {
   title: string;
@@ -22,6 +23,9 @@ interface Recipe {
 
 async function getRecipes(): Promise<Recipe[]> {
   const result = await fetch("http://localhost:4000/recipes");
+
+  //delay response
+  await new Promise((resolve) => setTimeout(resolve, 3000))
 
   return result.json();
 }
