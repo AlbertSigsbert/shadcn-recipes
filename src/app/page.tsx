@@ -10,7 +10,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { resolve } from "path";
+import { promises as fs } from 'fs';
 
 interface Recipe {
   title: string;
@@ -21,22 +21,26 @@ interface Recipe {
   id: string;
 }
 
-async function getRecipes(): Promise<Recipe[]> {
-  const result = await fetch("http://localhost:4000/recipes");
+async function getRecipes() {
+  // const result = await fetch("http://localhost:4000/recipes");
+  const file = await fs.readFile(process.cwd() + '/_data/db.json', 'utf8');
+  const recipes = JSON.parse(file);
 
   //delay response
   await new Promise((resolve) => setTimeout(resolve, 3000))
 
-  return result.json();
+  return recipes;
+
+  // return result.json();
 }
 
 export default async function Home() {
-  const recipes = await getRecipes();
+  const {recipes} = await getRecipes();
 
   return (
     <main>
       <div className="grid grid-cols-3 gap-8">
-        {recipes.map((recipe) => (
+        {recipes.map((recipe:Recipe) => (
           <Card key={recipe.id} className="flex flex-col justify-between">
             <CardHeader className="flex-row gap-4 items-center">
               <Avatar>
