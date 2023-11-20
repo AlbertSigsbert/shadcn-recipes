@@ -20,7 +20,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system">
           <nav className="flex justify-between">
-            <h1>Shadcn Recipes</h1>
+            <h1 className="text-2xl md:text-3xl lg:text-4xl">Shadcn Recipes</h1>
             <ModeToggle/>
           </nav>
           {children}
